@@ -1,6 +1,6 @@
 ---
 name: git-upload
-description: Organize all current Git changes into purpose-based commits, create and push a new branch, open a GitHub pull request, verify local checks and CI, squash merge automatically, and clean up local and remote branches. Use when the user asks to upload, publish, or ship repository changes through the complete commit-to-merge workflow, including requests such as "git upload", "변경사항 올려줘", "PR 만들고 merge해줘", or "커밋부터 브랜치 정리까지 해줘".
+description: Organize all current Git changes into purpose-based commits, create and push a new branch, open a GitHub pull request, verify local checks and CI, squash merge automatically, and clean up local and remote branches. Use only when the user explicitly invokes `$git-upload`, either by itself or with an accompanying request such as "$git-upload 깃 업로드 해줘". Do not trigger from an ordinary upload, push, publish, PR, or merge request that does not explicitly name `$git-upload`.
 ---
 
 # Git Upload
@@ -171,17 +171,19 @@ Squash 메시지 작성 규칙:
 - 한글을 기본으로 하고 필요한 기술 용어만 영어로 쓴다.
 
 5. 검증한 head SHA를 `--match-head-commit`으로 고정하고, 작성한 제목·본문과 `--delete-branch`를 지정해 `gh pr merge --squash`를 실행한다.
-6. repository가 요구하는 merge queue나 branch protection을 우회하지 않는다. `--admin`을 사용하지 않는다.
+6. merge 명령의 exit code와 관계없이 PR 상태와 merge commit SHA를 다시 조회한다.
+   - `OPEN`이면 merge와 브랜치 정리를 중단하고 실패를 보고한다.
+   - `MERGED`이면 merge 명령을 반복하지 말고 브랜치 정리 단계로 진행한다.
+7. repository가 요구하는 merge queue나 branch protection을 우회하지 않는다. `--admin`을 사용하지 않는다.
 
 ## 7. 브랜치 정리와 완료 검증
 
 1. PR 상태가 실제로 `MERGED`인지 확인한다.
 2. `gh pr merge --delete-branch`가 원격 작업 브랜치를 삭제했는지 확인한다.
+   - 원격 작업 브랜치가 남아 있어도 별도 삭제 명령이나 API로 삭제하지 않고 실제 상태를 보고한다.
 3. 기본 브랜치로 전환하고 원격 기본 브랜치를 fast-forward로 최신화한다.
 4. 로컬 작업 브랜치가 삭제되었는지 확인한다.
-5. 원격 작업 브랜치가 삭제되었는지 확인한다.
-6. 명시적으로 제외된 변경이 있다면 그대로 보존하고 위치를 보고한다.
-7. 자동 삭제가 실패하면 강제 삭제하지 말고 남은 브랜치와 실패 이유를 보고한다.
+5. 명시적으로 제외된 변경이 있다면 그대로 보존하고 위치를 보고한다.
 
 ## 완료 보고
 
