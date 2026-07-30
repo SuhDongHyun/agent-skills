@@ -1,28 +1,38 @@
 # agent-skills
 
-Codex, Claude 같은 LLM 코딩 에이전트가 범용적으로 재사용하기 좋은 스킬을 모아둔 저장소입니다. 원본은 `gstack`과 `superpowers`에서 가져왔고, 특정 제품이나 워크플로에만 묶이는 기능보다 대부분의 코드베이스에서 도움이 되는 작업 방식 위주로 선별했습니다.
+Codex, Claude 같은 LLM 코딩 에이전트에서 재사용할 수 있는 스킬 모음입니다.
 
-## Superpowers
+## 기본
 
-Superpowers 계열은 에이전트가 작업을 대충 밀어붙이지 않고, 요구사항 정리부터 구현, 검증까지 일관된 절차를 따르도록 돕는 스킬입니다.
+- `caveman`: 기술적 정확성을 유지하면서 응답을 짧게 압축합니다.
+- `deep-interview`: 모호한 요청을 질문으로 구체화해 실행 가능한 요구사항으로 정리합니다.
+- `git-upload`: 변경을 목적별로 커밋하고 PR 생성, 검증, squash merge, 브랜치 정리까지 수행합니다.
 
-- `brainstorming`: 모호한 요구사항, 기능 설계, UI 방향, API 설계 정리.
-- `writing-plans`: 다중 파일, 데이터 흐름 변경 작업의 실행 계획 분리.
-- `executing-plans`: 작성된 계획 실행과 단계별 검증.
-- `systematic-debugging`: 버그, 테스트 실패, 빌드 오류의 원인 추적.
-- `verification-before-completion`: 완료 선언 전 테스트, lint, build 검증.
-- `requesting-code-review`: 변경 후 diff 리뷰와 누락 위험 점검.
+## superpowers
+
+- `brainstorming`: 구현 전에 요구사항과 설계를 구체화합니다.
+- `writing-plans`: 복잡한 작업을 실행 가능한 단계로 나눕니다.
+- `executing-plans`: 작성된 계획을 검토하고 단계별로 실행합니다.
+- `systematic-debugging`: 버그와 테스트 실패의 근본 원인을 추적합니다.
+- `verification-before-completion`: 완료 선언 전에 테스트와 검증 결과를 확인합니다.
+- `requesting-code-review`: 변경 사항에 대한 코드 리뷰를 요청하고 피드백을 반영합니다.
 
 ## gstack
 
-gstack 계열은 QA, 브라우저 검증, 릴리스, 안전장치처럼 작업 후반부의 품질 확인과 운영 리스크 관리에 초점을 둔 스킬입니다. 일반 작업마다 자동으로 쓰기보다는, 더 깊은 검증이 필요할 때 선택적으로 사용하는 편이 좋습니다.
+- `browse`: 헤드리스 브라우저로 페이지를 탐색하고 검증합니다.
+- `careful`: 파괴적이거나 위험한 명령에 안전장치를 적용합니다.
+- `design-review`: UI의 시각적 일관성, 레이아웃, 사용성을 점검하고 개선합니다.
+- `health`: 테스트, lint, type check 등 코드베이스의 품질 상태를 점검합니다.
+- `investigate`: 복잡한 장애와 cross-stack 버그의 원인을 조사합니다.
+- `qa-only`: 웹 애플리케이션을 테스트하고 수정 없이 결과만 보고합니다.
+- `qa`: 웹 애플리케이션을 테스트하고 발견한 버그를 수정합니다.
+- `review`: 병합 전에 변경 사항과 리스크를 검토합니다.
+- `ship`: 테스트, 리뷰, 버전과 changelog 갱신, commit, push, PR 생성을 수행합니다.
 
-- `browse`: 실제 브라우저 탐색, 상호작용, 스크린샷 검증.
-- `qa-only`: 웹 애플리케이션 테스트와 버그 리포트 작성.
-- `qa`: 웹 애플리케이션 테스트, 버그 수정, 재검증.
-- `design-review`: UI 레이아웃, 간격, 시각적 일관성, 사용성 점검.
-- `health`: 테스트, lint, type check, dead code 기반 품질 점검.
-- `investigate`: 복잡한 장애나 cross-stack 버그 원인 조사.
-- `review`: PR, diff 병합 전 리스크 검토.
-- `ship`: 테스트, 리뷰, changelog, commit, push, PR 준비.
-- `careful`: 운영, DB, destructive command 전 안전장치.
+## matt-pocock
+
+- `domain-modeling`: 도메인 용어와 모델을 구체화하고 아키텍처 결정을 기록합니다.
+- `grilling`: 계획이나 아이디어를 집중 인터뷰로 검증합니다.
+- `grill-me`: `grilling` 인터뷰를 시작합니다.
+- `grill-with-docs`: 인터뷰와 함께 ADR 및 용어 문서를 작성합니다.
+- `handoff`: 다음 에이전트가 이어받을 수 있도록 대화 맥락을 인계 문서로 정리합니다.
