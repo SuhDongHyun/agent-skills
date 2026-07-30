@@ -1,0 +1,4 @@
+interface:
+  display_name: "Git Upload"
+  short_description: "Git 변경을 PR 병합과 브랜치 정리까지 자동화"
+  default_prompt: "Use $git-upload to organize all current changes into purposeful commits, create a PR, verify it, squash merge it, and clean up the branch."
