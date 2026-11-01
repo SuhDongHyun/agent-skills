@@ -8,7 +8,8 @@
 # 요청한 스킬만 교체하고, ~/.agents/skills와 ~/.claude/skills의 다른 항목은 그대로 둔다.
 set -Eeuo pipefail
 
-readonly SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+readonly SCRIPT_DIR
 readonly HOME_DIR="${HOME:?HOME is required}"
 readonly AGENTS_DIR="$HOME_DIR/.agents"
 readonly TARGET_SKILLS="$AGENTS_DIR/skills"
